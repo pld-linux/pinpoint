@@ -1,4 +1,7 @@
-# TODO: dax-0.2 ???
+#
+# Conditional build:
+%bcond_without	dax	# SVG loading with dax
+
 Summary:	Pinpoint - a tool for making hackers do excellent presentations
 Summary(pl.UTF-8):	Pinpoint - narzędzie pozwalającym hackerom robić świetne prezentacje
 Name:		pinpoint
@@ -15,10 +18,11 @@ BuildRequires:	cairo-devel >= 1.9.12
 BuildRequires:	clutter-devel >= 1.23.7
 BuildRequires:	clutter-gst-devel >= 3.0.0
 BuildRequires:	clutter-gtk-devel >= 1.6
+%{?with_dax:BuildRequires:	dax-svg-devel >= 0.1}
 BuildRequires:	gdk-pixbuf2-devel >= 2.0
 BuildRequires:	glib2-devel >= 1:2.26
 BuildRequires:	librsvg-devel >= 2.0
-#BuildRequires:	mx-devel >= 1.0 # with dax
+%{?with_dax:BuildRequires:	mx-devel >= 1.0}
 BuildRequires:	pkgconfig
 BuildRequires:	pkgconfig(cairo-pdf) >= 1.9.12
 BuildRequires:	tar >= 1:1.22
@@ -45,6 +49,7 @@ niewielkie ilości zwięzłego tekstu.
 %{__autoheader}
 %{__automake}
 %configure \
+	--enable-dax%{!?with_dax:=no} \
 	--disable-silent-rules
 %{__make}
 
